@@ -86,17 +86,17 @@ class _NavigationStateUpdaterState extends State<_NavigationStateUpdater> {
   void _updateNavigationState() {
     if (!mounted) return;
     
-    final cubit = context.read<NavigationCubit>();
-    final newLocation = GoRouterState.of(context).uri.path;
-    final newBrightness = MediaQuery.platformBrightnessOf(context);
-    final newIsDark = newBrightness == Brightness.dark;
+          final cubit = context.read<NavigationCubit>();
+          final newLocation = GoRouterState.of(context).uri.path;
+          final newBrightness = MediaQuery.platformBrightnessOf(context);
+          final newIsDark = newBrightness == Brightness.dark;
 
     if (_lastLocation != newLocation) {
-      cubit.updateCurrentRoute(newLocation);
+          cubit.updateCurrentRoute(newLocation);
       _lastLocation = newLocation;
     }
     if (_lastBrightness != newBrightness) {
-      cubit.updateTheme(newIsDark);
+          cubit.updateTheme(newIsDark);
       _lastBrightness = newBrightness;
     }
   }
@@ -139,17 +139,17 @@ class _NavigationStateUpdaterState extends State<_NavigationStateUpdater> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
+          return Scaffold(
+            body: Stack(
+              children: [
           widget.child,
-          const Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: CustomBottomNavigation(),
-          ),
-        ],
+                const Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: CustomBottomNavigation(),
+                ),
+              ],
       ),
     );
   }

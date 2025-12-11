@@ -16,6 +16,7 @@ class WaveSplitApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'WaveSplit',
       theme: AppTheme.light,
+      debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.router,
     );
   }

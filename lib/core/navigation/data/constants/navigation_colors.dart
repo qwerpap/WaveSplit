@@ -30,9 +30,23 @@ class NavigationColors {
         alpha: BottomNavigationUIConstants.shadowOpacity,
       );
 
-  static Color getBorderColor() => Colors.white.withValues(
+  static Color getBorderColor(bool isDark) {
+    if (isDark) {
+      return Colors.white.withValues(
         alpha: BottomNavigationUIConstants.borderOpacity,
       );
+    } else {
+      return Colors.black.withValues(
+        alpha: BottomNavigationUIConstants.borderOpacityLight,
+      );
+    }
+  }
+
+  static double getBorderWidth(bool isDark) {
+    return isDark
+        ? BottomNavigationUIConstants.borderWidth
+        : BottomNavigationUIConstants.borderWidthLight;
+  }
 
   static Color getGlassColor(bool isDark) => Colors.white.withValues(
         alpha: isDark

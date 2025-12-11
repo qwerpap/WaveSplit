@@ -1,0 +1,89 @@
+# Cursor Rules for WaveSplit Flutter Project
+
+## Image Generation
+- If you need to generate images, use the image-generation MCP tool with quality set to "low."
+- Save images to the appropriate directory based on format:
+  - PNG images → `assets/png/`
+  - SVG images → `assets/svg/`
+- Before generating, check if the target directory exists. If it doesn't exist, create it first.
+- Use descriptive filenames that indicate the image's purpose (e.g., `home_icon.png`, `settings_button.svg`).
+
+## Bloc/Cubit Organization
+
+### Feature Bloc/Cubit Structure
+- For each feature, create bloc/cubit in the feature's `bloc/` directory
+- Structure: `lib/features/{feature_name}/bloc/{feature_name}.dart` (or `{feature_name}_cubit.dart`)
+- For BLOC pattern: create 3 separate files:
+  - `{feature_name}_event.dart` - all events
+  - `{feature_name}_state.dart` - all states (extends Equatable)
+  - `{feature_name}_bloc.dart` - the bloc class
+- For CUBIT pattern: create 2 separate files:
+  - `{feature_name}_state.dart` - all states (extends Equatable)
+  - `{feature_name}_cubit.dart` - the cubit class
+
+### Bloc Registration
+- ALL blocs and cubits MUST be registered in `lib/core/bloc/bloc_providers.dart`
+- Add a private static method `_register{BlocName}()` in `BlocProviders` class
+- Call this method in `setup()` method
+- Use GetIt for dependency injection: `getIt.registerFactory<BlocName>(() => BlocName(...))`
+- If bloc/cubit needs parameters, use `registerFactoryParam<BlocName, Param1Type, Param2Type>`
+- Add the bloc/cubit to `wrapWithProviders()` method's `MultiBlocProvider` if it needs to be available globally
+
+### Example Structure
+```
+lib/features/profile/
+  ├── bloc/
+  │   ├── profile_event.dart
+  │   ├── profile_state.dart
+  │   └── profile_bloc.dart
+  └── view/
+      └── profile_screen.dart
+```
+
+## Code Style & Best Practices
+
+### State Classes
+- All state classes MUST extend `Equatable`
+- Implement `copyWith` method for state updates
+- Include all properties in `props` getter
+
+### Import Organization
+- Group imports: Flutter packages, then third-party packages, then project imports
+- Use relative imports for files in the same feature
+- Use absolute imports (package:wave_split/...) for cross-feature imports
+
+### Feature Structure
+- Each feature should have its own directory under `lib/features/`
+- Feature structure: `{feature_name}/view/` for screens, `{feature_name}/bloc/` for state management
+- Keep feature-specific code isolated within the feature directory
+
+### Widget Organization
+- StatelessWidget for simple widgets without state
+- Use BlocBuilder/BlocListener when consuming bloc/cubit
+- Extract reusable widgets to `lib/core/shared/widgets/` or feature-specific widget folders
+
+### Constants
+- Feature-specific constants go in `lib/features/{feature_name}/data/constants/`
+- Global constants go in `lib/constants/`
+- Use static const for immutable values
+
+### Navigation
+- All routes are defined in `lib/core/navigation/presentation/widgets/app_router.dart`
+- Use `NavigationConstants` for route paths
+- Use `PageTransitions` for page transitions
+
+## When Creating New Features
+
+1. Create feature directory: `lib/features/{feature_name}/`
+2. Create `view/` subdirectory with `{feature_name}_screen.dart`
+3. If state management needed:
+   - Create `bloc/` subdirectory
+   - Create bloc/cubit files following the structure above
+   - Register in `BlocProviders.setup()`
+4. Add route in `app_router.dart`
+5. Add navigation constant in `NavigationConstants` if needed
+
+## Code Generation
+- Use `equatable` for state classes (already in dependencies)
+- Follow Flutter lint rules from `analysis_options.yaml`
+

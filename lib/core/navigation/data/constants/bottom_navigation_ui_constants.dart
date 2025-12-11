@@ -16,10 +16,12 @@ class BottomNavigationUIConstants {
   
   static const double shadowBlurRadius = 20.0;
   static const Offset shadowOffset = Offset(0, 4);
-  static const double shadowOpacity = 0.1;
+  static const double shadowOpacity = 0.15;
   
   static const double borderWidth = 0.5;
-  static const double borderOpacity = 0.2;
+  static const double borderOpacity = 0.3;
+  static const double borderWidthLight = 0.8;
+  static const double borderOpacityLight = 0.15;
   
   static const double indicatorGlowRadius = 1.2;
   static const double selectedGlowRadius = 1.5;
@@ -39,17 +41,17 @@ class BottomNavigationUIConstants {
   static const Curve scaleAnimationCurve = Curves.easeOut;
   
   static const double glassRefractiveIndex = 1.5;
-  static const double glassThickness = 25.0;
-  static const double glassBlur = 20.0;
-  static const double glassSaturation = 2.0;
+  static const double glassThickness = 20.0;
+  static const double glassBlur = 30.0;
+  static const double glassSaturation = 1.2;
   static const double glassLightAngle = 0.7853981633974483;
   static const double glassChromaticAberration = 0.01;
   
-  static const double glassLightIntensityLight = 1.0;
-  static const double glassLightIntensityDark = 0.6;
+  static const double glassLightIntensityLight = 1.5;
+  static const double glassLightIntensityDark = 0.8;
   static const double glassAmbientStrengthLight = 0.4;
   static const double glassAmbientStrengthDark = 0.2;
-  static const double glassColorOpacityLight = 0.6;
+  static const double glassColorOpacityLight = 0.4;
   static const double glassColorOpacityDark = 0.25;
   
   static const double glassBlendGroup = 10.0;

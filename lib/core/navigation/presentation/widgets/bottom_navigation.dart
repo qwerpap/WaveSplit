@@ -43,57 +43,51 @@ class CustomBottomNavigation extends StatelessWidget {
               ),
               child: LiquidGlassLayer(
                 settings: glassSettings,
-                child: LiquidGlassBlendGroup(
-                  blend: BottomNavigationUIConstants.glassBlendGroup,
-                  child: LiquidGlass.grouped(
-                    clipBehavior: Clip.antiAlias,
-                    shape: LiquidRoundedSuperellipse(
-                      borderRadius: BottomNavigationUIConstants.borderRadius,
-                    ),
-                    child: ClipRRect(
+                child: LiquidGlass(
+                  shape: LiquidRoundedSuperellipse(
+                    borderRadius: BottomNavigationUIConstants.borderRadius,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
                         BottomNavigationUIConstants.borderRadius,
                       ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: NavigationColors.getBorderColor(),
-                            width: BottomNavigationUIConstants.borderWidth,
-                          ),
-                        ),
-                        child: GlassGlow(
-                          glowColor: NavigationColors.getGlassGlowColor(),
-                          glowRadius:
-                              BottomNavigationUIConstants.indicatorGlowRadius,
-                          child: GestureDetector(
-                            onPanStart: (details) {
-                              final box = cubit.containerKey.currentContext
-                                  ?.findRenderObject() as RenderBox?;
-                              if (box != null) {
-                                final localPosition =
-                                    box.globalToLocal(details.globalPosition);
-                                cubit.startDrag(localPosition);
-                              }
-                            },
-                            onPanUpdate: (details) {
-                              final box = cubit.containerKey.currentContext
-                                  ?.findRenderObject() as RenderBox?;
-                              if (box != null) {
-                                final localPosition =
-                                    box.globalToLocal(details.globalPosition);
-                                cubit.updateDrag(localPosition, box.size);
-                              }
-                            },
-                            onPanEnd: (details) => cubit.endDrag(context),
-                            onPanCancel: () => cubit.cancelDrag(),
-                            child: _NavigationContent(
-                              currentIndex: state.currentIndex,
-                              isDragging: state.isDragging,
-                              targetIndex: state.targetIndex,
-                              dragPosition: state.dragPosition,
-                              cubit: cubit,
-                            ),
-                          ),
+                      border: Border.all(
+                        color: NavigationColors.getBorderColor(state.isDark),
+                        width: NavigationColors.getBorderWidth(state.isDark),
+                      ),
+                    ),
+                    child: GlassGlow(
+                      glowColor: NavigationColors.getGlassGlowColor(),
+                      glowRadius:
+                          BottomNavigationUIConstants.indicatorGlowRadius,
+                      child: GestureDetector(
+                        onPanStart: (details) {
+                          final box = cubit.containerKey.currentContext
+                              ?.findRenderObject() as RenderBox?;
+                          if (box != null) {
+                            final localPosition =
+                                box.globalToLocal(details.globalPosition);
+                            cubit.startDrag(localPosition);
+                          }
+                        },
+                        onPanUpdate: (details) {
+                          final box = cubit.containerKey.currentContext
+                              ?.findRenderObject() as RenderBox?;
+                          if (box != null) {
+                            final localPosition =
+                                box.globalToLocal(details.globalPosition);
+                            cubit.updateDrag(localPosition, box.size);
+                          }
+                        },
+                        onPanEnd: (details) => cubit.endDrag(context),
+                        onPanCancel: () => cubit.cancelDrag(),
+                        child: _NavigationContent(
+                          currentIndex: state.currentIndex,
+                          isDragging: state.isDragging,
+                          targetIndex: state.targetIndex,
+                          dragPosition: state.dragPosition,
+                          cubit: cubit,
                         ),
                       ),
                     ),
@@ -144,41 +138,41 @@ class _NavigationContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-      child: Container(
-        key: cubit.containerKey,
-        padding: const EdgeInsets.symmetric(
+        return RepaintBoundary(
+          child: Container(
+            key: cubit.containerKey,
+            padding: const EdgeInsets.symmetric(
           horizontal: BottomNavigationUIConstants.containerHorizontalPadding,
-        ),
-        height: BottomNavigationUIConstants.barHeight,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final itemWidth =
-                constraints.maxWidth /
-                BottomNavigationConstants.navigationItems.length;
+            ),
+            height: BottomNavigationUIConstants.barHeight,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final itemWidth =
+                    constraints.maxWidth /
+                    BottomNavigationConstants.navigationItems.length;
 
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: BottomNavigationConstants.navigationItems.length,
-              itemExtent: itemWidth,
-              itemBuilder: (context, index) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: BottomNavigationConstants.navigationItems.length,
+                  itemExtent: itemWidth,
+                  itemBuilder: (context, index) {
                 final item = BottomNavigationConstants.navigationItems[index];
-                final isSelected = index == currentIndex;
+                    final isSelected = index == currentIndex;
                 final showIndicator = isSelected || _shouldShowIndicator(index);
 
-                return _NavigationItem(
-                  item: item,
-                  isSelected: isSelected,
-                  showIndicator: showIndicator,
-                  onTap: () => cubit.navigateToRoute(context, item.route),
+                    return _NavigationItem(
+                      item: item,
+                      isSelected: isSelected,
+                      showIndicator: showIndicator,
+                      onTap: () => cubit.navigateToRoute(context, item.route),
+                    );
+                  },
                 );
               },
-            );
-          },
-        ),
-      ),
+            ),
+          ),
     );
   }
 }
