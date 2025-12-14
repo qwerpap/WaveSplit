@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('History'),
+        title: const Text('Settings'),
       ),
       body: const Center(
-        child: Text('History Screen'),
+        child: Text('Settings Screen'),
       ),
     );
   }
 }
-

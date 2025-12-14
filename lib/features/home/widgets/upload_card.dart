@@ -7,9 +7,14 @@ import '../../../core/theme/app_fonts.dart';
 import '../../../constants/strings.dart';
 
 class UploadCard extends StatelessWidget {
-  const UploadCard({super.key, required this.onPressed});
+  const UploadCard({
+    super.key, 
+    required this.onPressed,
+    this.isLoading = false,
+  });
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,7 @@ class UploadCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: CustomElevatedButton(
-                  text: AppStrings.chooseFile,
+                  text: isLoading ? 'Selecting...' : AppStrings.chooseFile,
                   horizontalPadding: 16,
                   onPressed: onPressed,
                 ),
